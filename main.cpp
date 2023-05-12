@@ -18,42 +18,42 @@ struct Fuerza {
     float magnitud;
     float direccion;
     float ubicacion[2];
-    string sentido;
-};
-
-struct Palanca {
-    float longitud_palanca;
-    float fulcro[2];
-    Fuerza fuerza[];
 };
 
 struct Nudo {
     float ubicacion[2];
-    Fuerza fuerza[];
+    string nombre;
 };
 
-struct Armadura{
+struct Palanca {
+    float longitud_palanca;
+    float fulcro;
+    Fuerza fuerzaReaccion;
+};
+
+struct Armadura {
     float longitud;
-    float altura;
-    float ancho;
-    Fuerza fuerza[];
+    Nudo nudos;
+    Fuerza fuerzas;
 };
 
-
-class Armazon : public Estructura {
-public:
-    float longitud_lado1;
-    float longitud_lado2;
-    float altura_lado1;
-    float altura_lado2;
-    void calcular_balance_armazon();
+void addFuerza(Fuerza fuerza){
+    cout << "Ingrese la magnitud de la fuerza: "; cin >> fuerza.magnitud >> " N";
+    cout << "Ingrese la direccion de la fuerza: "; cin >> fuerza.direccion >> " °";
+    cout << "Ingrese la ubicacion de la fuerza: ("; cin >> fuerza.ubicacion[0] >> " m, " >> fuerza.ubicacion[1] >> " m)";
 };
 
-class Estructura {
-public:
-    std::string nombre;
-    float longitud;
-    float ancho;
-    float altura;
+void addNfuerzas (int N){
+    Fuerza *fuerzas = new Fuerza[N];
+    for (int i = 0; i < N; i++){
+        addFuerza(fuerzas[i]);
+    }
+};
 
+void addNudos (int N, struct Armadura armadura){
+    Nudo *nudos = new Nudo[N];
+    for (int i = 0; i < N; i++){
+        nudos[i].nombre = "Nudo " + i;
+        nudos[i].ubicacion[0] =
+    }
 };
