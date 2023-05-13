@@ -3,51 +3,54 @@ CXX := g++
 # Compiler flags
 CXXFLAGS := -std=c++20 -Wall
 
-# Source file and output executable
+# Source file
 SRC := main.cpp
-EXE := main
+# Output directory and executable name
+BIN_DIR := bin
+EXE := $(BIN_DIR)/main
 
 # Include directories
 INCLUDES := -I.
 
 # Libraries (if any)
-# LIBS :=
+LIBS :=
 
 # Windows-specific settings
 ifeq ($(OS),Windows_NT)
 	# Executable file extension
-	EXE := main.exe
+	EXE := $(BIN_DIR)/main.exe
 	# Library directories
-	# LIBS :=
+	LIBS :=
 	# Libraries to link (if any)
-	# LIBS +=
+	LIBS +=
 	# Use mingw32-make for building on Windows
 	MAKE := mingw32-make
 	# Command for running the executable on Windows
-	RUN_COMMAND := ./$(EXE)
+	RUN_COMMAND := $(EXE)
 else
 	# macOS-specific settings (assuming Clang compiler)
-	# Add macOS-specific compiler flags (if any) -mmacosx-version-min=10.9
-	CXXFLAGS += 
-	# Add macOS-specific library directories (if any) -Lpath/to/libraries
-	# LIBS := 
-	# Add macOS-specific libraries to link (if any) -llibrary_name
-	# LIBS += 	# Use make for building on macOS or other Unix-like systems
+	# Add macOS-specific compiler flags (if any)
+	CXXFLAGS +=
+	# Add macOS-specific library directories (if any)
+	LIBS :=
+	# Add macOS-specific libraries to link (if any)
+	LIBS +=
+	# Use make for building on macOS or other Unix-like systems
 	MAKE := make
 	# Command for running the executable on macOS and Unix-like systems
-	RUN_COMMAND := ./$(EXE)
+	RUN_COMMAND := $(EXE)
 endif
 
 all: $(EXE)
 
 $(EXE): $(SRC)
+	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $(LIBS) $< -o $@
 
 run: $(EXE)
 	$(RUN_COMMAND)
 
 clean:
-	rm -f $(EXE)
+	rm -rf $(BIN_DIR)
 
 .PHONY: all run clean
-
