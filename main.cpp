@@ -17,12 +17,30 @@ using namespace std;
 struct Fuerza {
     float magnitud;
     float direccion;
+<<<<<<< Updated upstream
     float ubicacion[2];
 };
 
 struct Nudo {
     float ubicacion[2];
     string nombre;
+=======
+    float ubiX;
+    float ubiY;
+    string sentido;
+};
+
+struct Palanca {
+    float longitud_palanca;
+    float fulcroX;
+    float fulcroY;
+    Fuerza fuerza;
+};
+
+struct Nudo {
+    float ubiX;
+    float ubiY;
+>>>>>>> Stashed changes
 };
 
 struct Palanca {
@@ -33,6 +51,7 @@ struct Palanca {
 
 struct Armadura {
     float longitud;
+<<<<<<< Updated upstream
     Nudo nudos;
     Fuerza fuerzas;
 };
@@ -57,3 +76,13 @@ void addNudos (int N, struct Armadura armadura){
         nudos[i].ubicacion[0] =
     }
 };
+=======
+    float altura;
+    Fuerza *fuerza;
+    Nudo *nudos;
+};
+
+int main(){
+    cout << "Hello World!" << endl;
+}
+>>>>>>> Stashed changes
