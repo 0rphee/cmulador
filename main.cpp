@@ -13,6 +13,10 @@ Un equipo de dos integrantes es beneficioso para el desarrollo de este proyecto 
 #endif
 
 void obtener_nudos(int num_nudos, Armadura *armadura);
+void obtener_fuerza_palanca(int num_fuerzas);
+void obtener_fuerza_armadura(int num_fuerzas, Armadura * armadura);
+void obtener_datos_palanca(Palanca *palanca);
+void obtener_datos_armadura(Armadura *armadura);
 
 using namespace std;
 
@@ -21,14 +25,14 @@ typedef struct{
     float direccion;
     float ubiX;
     float ubiY;
-    string sentido;
+    float fuerzaX;
+    float fuerzaY;
 }Fuerza;
 
 typedef struct{
     float longitud_palanca;
-    float fulcroX;
-    float fulcroY;
-    Fuerza fuerza;
+    float fulcro;
+    Fuerza *fuerza;
 }Palanca ;
 
 typedef struct{
@@ -39,6 +43,7 @@ typedef struct{
 typedef struct{
     float longitud;
     float altura;
+    int num_nudos;
     Fuerza *fuerza;
     Nudo *nudos;
 }Armadura;
@@ -47,8 +52,7 @@ typedef struct{
 void obtener_nudos(int num_nudos, Armadura *armadura){
     bool validacion = false;
     armadura->nudos = new Nudo[num_nudos];
-    do{
-        if ( (num_nudos%2) != 0 ){
+    if ( (num_nudos%2) != 0 ){
         for (int i = 0; i < num_nudos; i++){
             armadura->nudos[i].ubiX = (armadura->longitud/num_nudos)*i;
             if ( (i%2) != 0 ){
@@ -58,19 +62,72 @@ void obtener_nudos(int num_nudos, Armadura *armadura){
                 armadura->nudos[i].ubiY = 0;
             }
         }
-        validacion = true;
+    }
+    else{
+        
+    }
+}
+
+void obtener_fuerza_palanca(int num_fuerzas){
+    Fuerza * fuerza = new Fuerza[num_fuerzas];
+    for(int i = 0; i < num_fuerzas; i++){
+        cout << "Ingrese la magnitud de la fuerza " << i+1 << ": ";
+        cin >> fuerza[i].magnitud;
+        cout << "Ingrese la dirección de la fuerza " << i+1 << ": ";
+        cin >> fuerza[i].direccion;
+        cout << "Ingrese la ubicación en X de la fuerza " << i+1 << ": ";
+        cin >> fuerza[i].ubiX;
+        fuerza[i].fuerzaX = fuerza[i].magnitud*cos(fuerza[i].direccion);
+        fuerza[i].fuerzaY = fuerza[i].magnitud*sin(fuerza[i].direccion);
+    }
+}
+
+void obtener_fuerza_armadura(int num_fuerzas, Armadura * armadura){
+    armadura->fuerza = new Fuerza[num_fuerzas];
+    for(int i = 0; i < num_fuerzas; i++){
+        int numero_nudo = 0;
+        cout << "Ingrese la magnitud de la fuerza " << i+1 << ": ";
+        cin >> armadura->fuerza[i].magnitud;
+        cout << "Ingrese la dirección de la fuerza " << i+1 << ": ";
+        cin >> armadura->fuerza[i].direccion;
+        armadura->fuerza[i].fuerzaX = armadura->fuerza[i].magnitud*cos(armadura->fuerza[i].direccion);
+        armadura->fuerza[i].fuerzaY = armadura->fuerza[i].magnitud*sin(armadura->fuerza[i].direccion);
+        cout << "Ingrese la ubicación del nudo al que se le aplica la fuerza " << i+1 << ": ";
+        cin >> numero_nudo;
+        armadura->fuerza[i].ubiX = armadura->nudos[numero_nudo-1].ubiX;
+        armadura->fuerza[i].ubiY = armadura->nudos[numero_nudo-1].ubiY;
+    }
+}
+
+void obtener_datos_palanca(Palanca *palanca){
+    cout << "Ingrese la longitud de la palanca: ";
+    cin >> palanca->longitud_palanca;
+    cout << "Ingrese la ubicación del fulcro: ";
+    cin >> palanca->fulcro;
+}
+
+void obtener_datos_armadura(Armadura *armadura){
+    cout << "Ingrese la longitud de la armadura: ";
+    cin >> armadura->longitud;
+    cout << "Ingrese la altura de la armadura: ";
+    cin >> armadura->altura;
+    bool validación = false;    
+    do{
+        cout << "Ingrese el número de nudos: ";
+        cin >> armadura->num_nudos;
+        if ( (armadura->num_nudos%2) != 0 ){
+            validación = true;
         }
         else{
-            if( (num_nudos%4) == 0){
-                
-                validacion = true;
+            if( (armadura->num_nudos%4) == 0){
+                validación = true;
             }
             else{
                 cout << "El número de nudos debe ser impar o múltiplo de 4" << endl;
-                validacion = false;
+                validación = false;
             }
         }
-    }while (validacion == false);
+    }while(validación == false);
 }
 
 int main(){
