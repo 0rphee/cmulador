@@ -12,77 +12,67 @@ Un equipo de dos integrantes es beneficioso para el desarrollo de este proyecto 
 #include <windows.h>
 #endif
 
+void obtener_nudos(int num_nudos, Armadura *armadura);
+
 using namespace std;
 
-struct Fuerza {
+typedef struct{
     float magnitud;
     float direccion;
-<<<<<<< Updated upstream
-    float ubicacion[2];
-};
-
-struct Nudo {
-    float ubicacion[2];
-    string nombre;
-=======
     float ubiX;
     float ubiY;
     string sentido;
-};
+}Fuerza;
 
-struct Palanca {
+typedef struct{
     float longitud_palanca;
     float fulcroX;
     float fulcroY;
     Fuerza fuerza;
-};
+}Palanca ;
 
-struct Nudo {
+typedef struct{
     float ubiX;
     float ubiY;
->>>>>>> Stashed changes
-};
+}Nudo;
 
-struct Palanca {
-    float longitud_palanca;
-    float fulcro;
-    Fuerza fuerzaReaccion;
-};
-
-struct Armadura {
+typedef struct{
     float longitud;
-<<<<<<< Updated upstream
-    Nudo nudos;
-    Fuerza fuerzas;
-};
-
-void addFuerza(Fuerza fuerza){
-    cout << "Ingrese la magnitud de la fuerza: "; cin >> fuerza.magnitud >> " N";
-    cout << "Ingrese la direccion de la fuerza: "; cin >> fuerza.direccion >> " °";
-    cout << "Ingrese la ubicacion de la fuerza: ("; cin >> fuerza.ubicacion[0] >> " m, " >> fuerza.ubicacion[1] >> " m)";
-};
-
-void addNfuerzas (int N){
-    Fuerza *fuerzas = new Fuerza[N];
-    for (int i = 0; i < N; i++){
-        addFuerza(fuerzas[i]);
-    }
-};
-
-void addNudos (int N, struct Armadura armadura){
-    Nudo *nudos = new Nudo[N];
-    for (int i = 0; i < N; i++){
-        nudos[i].nombre = "Nudo " + i;
-        nudos[i].ubicacion[0] =
-    }
-};
-=======
     float altura;
     Fuerza *fuerza;
     Nudo *nudos;
-};
+}Armadura;
+
+
+void obtener_nudos(int num_nudos, Armadura *armadura){
+    bool validacion = false;
+    armadura->nudos = new Nudo[num_nudos];
+    do{
+        if ( (num_nudos%2) != 0 ){
+        for (int i = 0; i < num_nudos; i++){
+            armadura->nudos[i].ubiX = (armadura->longitud/num_nudos)*i;
+            if ( (i%2) != 0 ){
+                armadura->nudos[i].ubiY = armadura->altura;
+            }
+            else{
+                armadura->nudos[i].ubiY = 0;
+            }
+        }
+        validacion = true;
+        }
+        else{
+            if( (num_nudos%4) == 0){
+                
+                validacion = true;
+            }
+            else{
+                cout << "El número de nudos debe ser impar o múltiplo de 4" << endl;
+                validacion = false;
+            }
+        }
+    }while (validacion == false);
+}
 
 int main(){
     cout << "Hello World!" << endl;
 }
->>>>>>> Stashed changes
