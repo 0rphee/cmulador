@@ -51,42 +51,43 @@ Fuerza calculo_fuerzas_palanca(Palanca palanca);
 Fuerza calculo_fuerzas_armadura(Armadura armadura);
 
 // Corregir
-void obtener_nudos(Armadura *armadura){
+Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
     bool validacion = false;
-    armadura->nudos = new Nudo[armadura->num_nudos];
-    if ( (armadura->num_nudos%2) != 0 ){
-        for (int i = 0; i < armadura->num_nudos; i++){
-            armadura->nudos[i].ubiX = (armadura->longitud/armadura->num_nudos)*i;
+    Nudo* nudos = new Nudo[num_nudos];
+    if ( (num_nudos%2) != 0 ){
+        for (int i = 0; i < num_nudos; i++){
+            nudos[i].ubiX = (longitud/num_nudos)*i;
             if ( (i%2) != 0 ){
-                armadura->nudos[i].ubiY = armadura->altura;
+                nudos[i].ubiY = altura;
             }
             else{
-                armadura->nudos[i].ubiY = 0;
+                nudos[i].ubiY = 0;
             }
         }
     }
     else{
         int acumulador = 0;
-        for(int i = 0; i < armadura->num_nudos; i++){
+        for(int i = 0; i < num_nudos; i++){
             if ( i == 0 ){
-                armadura->nudos[i].ubiX = 0;
-                armadura->nudos[i].ubiY = 0;
+                nudos[i].ubiX = 0;
+                nudos[i].ubiY = 0;
             }
-            if ( i == armadura->num_nudos-1 ){
-                armadura->nudos[i].ubiX = armadura->longitud;
-                armadura->nudos[i].ubiY = 0;
+            if ( i == num_nudos-1 ){
+                nudos[i].ubiX = longitud;
+                nudos[i].ubiY = 0;
             }
             if ( (i%2) != 0 ){
-                armadura->nudos[i].ubiX = (armadura->longitud/((armadura->num_nudos/2)+1))*(i/2);
-                armadura->nudos[i].ubiY = 0;
+                nudos[i].ubiX = (longitud/((num_nudos/2)+1))*(i/2);
+                nudos[i].ubiY = 0;
             }
             else{
-                armadura->nudos[i].ubiX = (armadura->longitud/((armadura->num_nudos/2)+1))*(i-acumulador);
+                nudos[i].ubiX = (longitud/((num_nudos/2)+1))*(i-acumulador);
                 acumulador += 1;
-                armadura->nudos[i].ubiY = armadura->altura;
+                nudos[i].ubiY = altura;
             }
         }
     }
+    return nudos;
 }
 
 void obtener_fuerza_palanca(int num_fuerzas){
