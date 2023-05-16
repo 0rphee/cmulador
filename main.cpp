@@ -12,14 +12,6 @@ Un equipo de dos integrantes es beneficioso para el desarrollo de este proyecto 
 #include <windows.h>
 #endif
 
-void obtener_nudos(int num_nudos, Armadura *armadura);
-void obtener_fuerza_palanca(int num_fuerzas);
-void obtener_fuerza_armadura(int num_fuerzas, Armadura * armadura);
-void obtener_datos_palanca(Palanca *palanca);
-void obtener_datos_armadura(Armadura *armadura);
-Fuerza calculo_fuerzas_palanca(Palanca palanca);
-Fuerza calculo_fuerzas_armadura(Armadura armadura);
-
 using namespace std;
 
 typedef struct{
@@ -49,6 +41,14 @@ typedef struct{
     Fuerza *fuerzas;
     Nudo *nudos;
 }Armadura;
+
+void obtener_nudos(int num_nudos, Armadura *armadura);
+void obtener_fuerza_palanca(int num_fuerzas);
+void obtener_fuerza_armadura(int num_fuerzas, Armadura * armadura);
+void obtener_datos_palanca(Palanca *palanca);
+void obtener_datos_armadura(Armadura *armadura);
+Fuerza calculo_fuerzas_palanca(Palanca palanca);
+Fuerza calculo_fuerzas_armadura(Armadura armadura);
 
 // Corregir
 void obtener_nudos(Armadura *armadura){
