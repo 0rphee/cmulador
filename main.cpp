@@ -42,8 +42,8 @@ typedef struct{
     Nudo *nudos;
 }Armadura;
 
-void obtener_nudos(int num_nudos, Armadura *armadura);
-void obtener_fuerza_palanca(int num_fuerzas);
+Nudo* obtener_nudos(int num_nudos, Armadura *armadura);
+Fuerza* obtener_fuerza_palanca(int num_fuerzas);
 void obtener_fuerza_armadura(int num_fuerzas, Armadura * armadura);
 void obtener_datos_palanca(Palanca *palanca);
 void obtener_datos_armadura(Armadura *armadura);
@@ -90,7 +90,7 @@ Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
     return nudos;
 }
 
-void obtener_fuerza_palanca(int num_fuerzas){
+Fuerza* obtener_fuerza_palanca(int num_fuerzas){
     Fuerza * fuerzas = new Fuerza[num_fuerzas];
     for(int i = 0; i < num_fuerzas; i++){
         cout << "Ingrese la magnitud de la fuerzas " << i+1 << ": ";
@@ -99,8 +99,8 @@ void obtener_fuerza_palanca(int num_fuerzas){
         cin >> fuerzas[i].direccion;
         cout << "Ingrese la ubicación en X de la fuerzas " << i+1 << ": ";
         cin >> fuerzas[i].ubiX;
-        fuerzas[i].fuerzaX = fuerzas[i].magnitud*cos(fuerzas[i].direccion);
-        fuerzas[i].fuerzaY = fuerzas[i].magnitud*sin(fuerzas[i].direccion);
+        fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
+        fuerzas[i].fuerzaY = fuerzas[i].magnitud * sin(fuerzas[i].direccion);
     }
 }
 
