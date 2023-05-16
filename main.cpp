@@ -64,6 +64,7 @@ void obtener_nudos(int num_nudos, Armadura *armadura){
         }
     }
     else{
+        int acumulador = 0;
         for(int i = 0; i < num_nudos; i++){
             if ( i == 0 ){
                 armadura->nudos[i].ubiX = 0;
@@ -78,7 +79,6 @@ void obtener_nudos(int num_nudos, Armadura *armadura){
                 armadura->nudos[i].ubiY = 0;
             }
             else{
-                int acumulador = 0;
                 armadura->nudos[i].ubiX = (armadura->longitud/((num_nudos/2)+1))*(i-acumulador);
                 acumulador += 1;
                 armadura->nudos[i].ubiY = armadura->altura;
