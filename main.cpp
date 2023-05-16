@@ -64,7 +64,26 @@ void obtener_nudos(int num_nudos, Armadura *armadura){
         }
     }
     else{
-        
+        for(int i = 0; i < num_nudos; i++){
+            if ( i == 0 ){
+                armadura->nudos[i].ubiX = 0;
+                armadura->nudos[i].ubiY = 0;
+            }
+            if ( i == num_nudos-1 ){
+                armadura->nudos[i].ubiX = armadura->longitud;
+                armadura->nudos[i].ubiY = 0;
+            }
+            if ( (i%2) != 0 ){
+                armadura->nudos[i].ubiX = (armadura->longitud/((num_nudos/2)+1))*(i/2);
+                armadura->nudos[i].ubiY = 0;
+            }
+            else{
+                int acumulador = 0;
+                armadura->nudos[i].ubiX = (armadura->longitud/((num_nudos/2)+1))*(i-acumulador);
+                acumulador += 1;
+                armadura->nudos[i].ubiY = armadura->altura;
+            }
+        }
     }
 }
 
@@ -113,8 +132,12 @@ void obtener_datos_armadura(Armadura *armadura){
     cin >> armadura->altura;
     bool validación = false;    
     do{
-        cout << "Ingrese el número de nudos: ";
+        cout << "Ingrese el número de nudos (N > 3 / N impar / N multiplo de 4): ";
         cin >> armadura->num_nudos;
+        if (armadura->num_nudos < 3){
+            cout << "El número de nudos debe ser mayor o igual a 3" << endl;
+            validación = false;
+        }
         if ( (armadura->num_nudos%2) != 0 ){
             validación = true;
         }
