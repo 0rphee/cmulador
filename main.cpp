@@ -115,8 +115,8 @@ void obtener_fuerza_armadura(Armadura armadura){
         cin >> armadura.fuerzas[i].magnitud;
         cout << "Ingrese la dirección de la fuerzas " << i+1 << ": ";
         cin >> armadura.fuerzas[i].direccion;
-        armadura.fuerzas[i].fuerzaX = armadura.fuerzas[i].magnitud*cos(armadura.fuerzas[i].direccion);
-        armadura.fuerzas[i].fuerzaY = armadura.fuerzas[i].magnitud*sin(armadura.fuerzas[i].direccion);
+        armadura.fuerzas[i].fuerzaX = armadura.fuerzas[i].magnitud * cos(armadura.fuerzas[i].direccion);
+        armadura.fuerzas[i].fuerzaY = armadura.fuerzas[i].magnitud * sin(armadura.fuerzas[i].direccion);
         cout << "Ingrese la ubicación del nudo al que se le aplica la fuerzas " << i+1 << ": ";
         cin >> numero_nudo;
         armadura.fuerzas[i].ubiX = armadura.nudos[numero_nudo-1].ubiX;
@@ -177,7 +177,16 @@ Armadura obtener_datos_armadura(){
 }
 
 Fuerza calculo_fuerzas_palanca(Palanca palanca){
-
+    Fuerza torca_resultante;
+    for(int i = 0; i < palanca.num_fuerzas_palanca; i++){
+        if(palanca.fuerzas[i].ubiX < palanca.fulcro){
+            torca_resultante.fuerzaX += palanca.fuerzas[i].fuerzaX * (palanca.fulcro - palanca.fuerzas[i].ubiX);
+        }
+        else{
+            torca_resultante.fuerzaX -= palanca.fuerzas[i].fuerzaX * (palanca.fuerzas[i].ubiX - palanca.fulcro);
+        }
+    }
+    return torca_resultante;
 }
 
 Fuerza calculo_fuerzas_armadura(Armadura armadura){
