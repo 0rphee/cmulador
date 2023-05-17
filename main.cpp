@@ -78,13 +78,13 @@ Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
                 nudos[i].ubiY = 0;
             }
             if ( (i%2) != 0 ){
-                nudos[i].ubiX = (longitud/((num_nudos/2)+1))*(i/2);
-                nudos[i].ubiY = 0;
-            }
-            else{
                 nudos[i].ubiX = (longitud/((num_nudos/2)+1))*(i-acumulador);
                 acumulador += 1;
                 nudos[i].ubiY = altura;
+            }
+            else{
+                nudos[i].ubiX = (longitud/((num_nudos/2)+1))*(i/2);
+                nudos[i].ubiY = 0;
             }
         }
     }
