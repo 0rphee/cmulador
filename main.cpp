@@ -8,6 +8,7 @@ Un equipo de dos integrantes es beneficioso para el desarrollo de este proyecto 
 */
 
 #include <iostream>
+#include <cmath>
 #ifdef WIN32
 #include <windows.h>
 #endif
