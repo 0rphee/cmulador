@@ -138,7 +138,7 @@ Palanca obtener_palanca(){
     return palanca;
 }
 
-Armadura obtener_datos_armadura(){
+Armadura obtener_armadura(){
     Armadura armadura;
     do{
         cout << "Ingrese la longitud de la armadura (L > 0): ";
