@@ -190,7 +190,7 @@ Fuerza calculo_fuerzas_palanca(Palanca palanca){
 }
 
 Fuerza calculo_fuerzas_armadura(Armadura armadura){
-
+    
 }
 
 int main(){
