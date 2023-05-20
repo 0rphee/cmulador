@@ -52,7 +52,10 @@ Fuerza* obtener_fuerzas_armadura(int numFuerzasArmadura, Nudo* nudos);
 Palanca obtener_palanca();
 Armadura obtener_armadura();
 Fuerza calculo_fuerzas_palanca(Palanca palanca);
-Fuerza calculo_fuerzas_armadura(Armadura armadura);
+float torca_resultante_armadura(Armadura armadura);
+Fuerza reaccion_ultimonudo(Armadura armadura);
+Fuerza reacción_nudo0(Armadura armadura);
+void calculo_fuerzas_armadura(Armadura armadura);
 
 Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
     bool validacion = false;  // TODO: CORREGIR
@@ -195,8 +198,38 @@ Fuerza calculo_fuerzas_palanca(Palanca palanca){
     return torca_resultante;
 }
 
-Fuerza calculo_fuerzas_armadura(Armadura armadura){
-    
+float torca_resultante_armadura(Armadura armadura){
+    float torca_resultante;
+    for(int i = 0; i < armadura.num_fuerzas_armadura; i++){
+        torca_resultante += armadura.fuerzas[i].fuerzaY * armadura.fuerzas[i].ubiX;
+    }
+    return torca_resultante;
+}
+
+Fuerza reaccion_ultimonudo(Armadura armadura){
+    Fuerza reaccion_ultimonudo;
+    reaccion_ultimonudo.magnitud = -(torca_resultante_armadura(armadura)/armadura.longitud);
+    reaccion_ultimonudo.direccion = 90;
+}
+
+Fuerza reacción_nudo0(Armadura armadura){
+    Fuerza reaccion_nudo0;
+    reaccion_nudo0.fuerzaX = 0;
+    reaccion_nudo0.fuerzaY = 0;
+    for(int i = 0; i < armadura.num_fuerzas_armadura; i++){
+        reaccion_nudo0.fuerzaX -= armadura.fuerzas[i].fuerzaX;
+        reaccion_nudo0.fuerzaY -= armadura.fuerzas[i].fuerzaY;
+    }
+    reaccion_nudo0.fuerzaY - reaccion_ultimonudo(armadura).magnitud;
+    reaccion_nudo0.magnitud = sqrt(pow(reaccion_nudo0.fuerzaX,2)+pow(reaccion_nudo0.fuerzaY,2));
+    reaccion_nudo0.direccion = atan(reaccion_nudo0.fuerzaY/reaccion_nudo0.fuerzaX);
+    return reaccion_nudo0;
+}
+
+void calculo_fuerzas_armadura(Armadura armadura){
+    cout << "Torca resultante en la armadura: " << torca_resultante_armadura(armadura) << " Nm" << endl;
+    cout << "Fuerza de reacción en el apoyo fijo: " << reacción_nudo0(armadura).magnitud << " N " << reacción_nudo0(armadura).direccion << "°" << endl;
+    cout << "Fuerza de reacción en el apoyo móvil: " << reaccion_ultimonudo(armadura).magnitud << " N " << reaccion_ultimonudo(armadura).direccion << "°" << endl;
 }
 
 int main(){
