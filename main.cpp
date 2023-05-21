@@ -7,6 +7,9 @@ Esto será una herramienta valiosa para ingenieros, arquitectos, estudiantes y c
 Un equipo de dos integrantes es beneficioso para el desarrollo de este proyecto complejo ya que puede acelerar el proceso de desarrollo, aportar diferentes habilidades y conocimientos, mejorar la calidad del proyecto y reducir la carga de trabajo y estrés asociado con el proyecto.
 */
 
+#include "mainwindow.h"
+#include <QApplication>
+
 #include <iostream>
 #include <cmath>
 
@@ -232,7 +235,10 @@ void calculo_fuerzas_armadura(Armadura armadura){
     cout << "Fuerza de reacción en el apoyo móvil: " << reaccion_ultimonudo(armadura).magnitud << " N " << reaccion_ultimonudo(armadura).direccion << "°" << endl;
 }
 
-int main(){
+int main(int argc, char *argv[]){
     cout << "Hello World!" << endl;
-    return 0;
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }
