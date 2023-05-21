@@ -54,11 +54,10 @@ Armadura obtener_armadura();
 Fuerza calculo_fuerzas_palanca(Palanca palanca);
 float torca_resultante_armadura(Armadura armadura);
 Fuerza reaccion_ultimonudo(Armadura armadura);
-Fuerza reacción_nudo0(Armadura armadura);
+Fuerza reaccion_nudo0(Armadura armadura);
 void calculo_fuerzas_armadura(Armadura armadura);
 
 Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
-    bool validacion = false;  // TODO: CORREGIR
     Nudo* nudos = new Nudo[num_nudos];
     if ( (num_nudos%2) != 0 ){
         for (int i = 0; i < num_nudos; i++){
@@ -199,7 +198,7 @@ Fuerza calculo_fuerzas_palanca(Palanca palanca){
 }
 
 float torca_resultante_armadura(Armadura armadura){
-    float torca_resultante;
+    float torca_resultante = 0.0;
     for(int i = 0; i < armadura.num_fuerzas_armadura; i++){
         torca_resultante += armadura.fuerzas[i].fuerzaY * armadura.fuerzas[i].ubiX;
     }
@@ -210,9 +209,10 @@ Fuerza reaccion_ultimonudo(Armadura armadura){
     Fuerza reaccion_ultimonudo;
     reaccion_ultimonudo.magnitud = -(torca_resultante_armadura(armadura)/armadura.longitud);
     reaccion_ultimonudo.direccion = 90;
+    return reaccion_ultimonudo;
 }
 
-Fuerza reacción_nudo0(Armadura armadura){
+Fuerza reaccion_nudo0(Armadura armadura){
     Fuerza reaccion_nudo0;
     reaccion_nudo0.fuerzaX = 0;
     reaccion_nudo0.fuerzaY = 0;
@@ -220,7 +220,7 @@ Fuerza reacción_nudo0(Armadura armadura){
         reaccion_nudo0.fuerzaX -= armadura.fuerzas[i].fuerzaX;
         reaccion_nudo0.fuerzaY -= armadura.fuerzas[i].fuerzaY;
     }
-    reaccion_nudo0.fuerzaY - reaccion_ultimonudo(armadura).magnitud;
+    reaccion_nudo0.fuerzaY -= reaccion_ultimonudo(armadura).magnitud;
     reaccion_nudo0.magnitud = sqrt(pow(reaccion_nudo0.fuerzaX,2)+pow(reaccion_nudo0.fuerzaY,2));
     reaccion_nudo0.direccion = atan(reaccion_nudo0.fuerzaY/reaccion_nudo0.fuerzaX);
     return reaccion_nudo0;
@@ -228,7 +228,7 @@ Fuerza reacción_nudo0(Armadura armadura){
 
 void calculo_fuerzas_armadura(Armadura armadura){
     cout << "Torca resultante en la armadura: " << torca_resultante_armadura(armadura) << " Nm" << endl;
-    cout << "Fuerza de reacción en el apoyo fijo: " << reacción_nudo0(armadura).magnitud << " N " << reacción_nudo0(armadura).direccion << "°" << endl;
+    cout << "Fuerza de reacción en el apoyo fijo: " << reaccion_nudo0(armadura).magnitud << " N " << reaccion_nudo0(armadura).direccion << "°" << endl;
     cout << "Fuerza de reacción en el apoyo móvil: " << reaccion_ultimonudo(armadura).magnitud << " N " << reaccion_ultimonudo(armadura).direccion << "°" << endl;
 }
 
