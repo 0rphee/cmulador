@@ -9,15 +9,27 @@
 #include <QStandardItemModel>
 #include <QStringList>
 #include <QStandardItem>
+#include <QHBoxLayout>
+#include <QSpacerItem>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    this->resize(550, 800);
-    this->botonPalanca = new QPushButton(this);
-    this->botonPalanca->setGeometry(50, 50, 200, 100);
-    this->botonPalanca->setText("boton");
+    this->ventanaArmadura = new VentanaArmadura();
+    this->ventanaArmadura->hide();
+
+    this->setMinimumSize(660, 500);
+    this->setMaximumSize(660, 500);
+    // this->resize(800, 550);
+
+
+    this->botonPalanca = new QPushButton("Realizar cálculos\nde palanca",this);
+    this->botonPalanca->setGeometry(120, 50, 150, 75);
+
+    this->botonArmadura = new QPushButton("Realizar cálculos\nde armadura",this);
+    this->botonArmadura->setGeometry(390, 50, 150, 75);
+    this->connect(this->botonArmadura, &QPushButton::released, this->ventanaArmadura, &VentanaArmadura::show);
 }
 
 MainWindow::~MainWindow()

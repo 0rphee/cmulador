@@ -10,8 +10,10 @@
 #include <QStandardItemModel>
 #include <QStringList>
 #include <QStandardItem>
-
+#include <QSpacerItem>
+#include <QHBoxLayout>
 #include <QMainWindow>
+#include "armadura.h"
 
 class MainWindow : public QMainWindow
 {
@@ -22,6 +24,9 @@ public:
     ~MainWindow();
 private:
    QPushButton * botonPalanca;
+   QPushButton * botonArmadura;
 
+   VentanaArmadura * ventanaArmadura;
+ 
 };
 #endif // MAINWINDOW_H
