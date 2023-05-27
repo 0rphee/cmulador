@@ -15,7 +15,6 @@ public:
         QPushButton* decrementButton = new QPushButton("-", this);
         QPushButton* incrementButton = new QPushButton("+", this);
         lineEdit = new QLineEdit("0", this);
-        // lineEdit->setValidator(new QIntValidator(0, maxValue, this)); // Restrict input to integers from 0 to 999
 
         layout->addWidget(decrementButton);
         layout->addWidget(lineEdit);

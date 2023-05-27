@@ -17,6 +17,7 @@
 #include <QPropertyAnimation>
 #include "counterwidget.cpp"
 #include "inputnumeroswidget.h"
+#include "tablafuerzaswidget.h"
 
 #ifndef ARMADURA_H
 #define ARMADURA_H
@@ -28,8 +29,7 @@ public:
     VentanaArmadura(QWidget *parent = nullptr);
     InputNumerosWidget * WinputAltura;
     InputNumerosWidget * WinputLongitud;
-
-
+    TablaFuerzasWidget * WtablaInputFuerzas;
 private:
 
 signals:

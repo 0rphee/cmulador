@@ -1,4 +1,5 @@
 #include "armadura.h"
+#include "tablafuerzaswidget.h"
 #include "iostream"
 
 class Lever : public QGraphicsItem {
@@ -51,6 +52,9 @@ VentanaArmadura::VentanaArmadura(QWidget *parent) : QWidget(parent)
 
     this->WinputAltura = new InputNumerosWidget("Longitud de armadura", 1, 99, this);
     this->WinputAltura->setGeometry(370, 10, 210, 90);
+
+    this->WtablaInputFuerzas = new TablaFuerzasWidget(this);
+    this->WtablaInputFuerzas->setGeometry(80, 110, 500, 380);
 
     this->show();
 }

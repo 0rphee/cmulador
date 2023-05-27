@@ -13,12 +13,14 @@ SOURCES += \
     inputnumeroswidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    counterwidget.cpp
+    counterwidget.cpp \
+    tablafuerzaswidget.cpp
 
 HEADERS += \
     armadura.h \
     inputnumeroswidget.h \
-    mainwindow.h
+    mainwindow.h \
+    tablafuerzaswidget.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
