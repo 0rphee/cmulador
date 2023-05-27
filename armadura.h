@@ -29,6 +29,7 @@ public:
     VentanaArmadura(QWidget *parent = nullptr);
     InputNumerosWidget * WinputAltura;
     InputNumerosWidget * WinputLongitud;
+    QWidget * Wresultados;
     TablaFuerzasWidget * WtablaInputFuerzas;
 private:
 

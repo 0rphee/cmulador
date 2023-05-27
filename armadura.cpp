@@ -47,14 +47,27 @@ VentanaArmadura::VentanaArmadura(QWidget *parent) : QWidget(parent)
     this->setMinimumSize(660, 500);
     this->setMaximumSize(660, 500);
 
+    this->WtablaInputFuerzas = new TablaFuerzasWidget(this);
+    this->WtablaInputFuerzas->setGeometry(60, 10, 260, 480);
+
     this->WinputAltura = new InputNumerosWidget("Altura de armadura", 1, 99, this);
-    this->WinputAltura->setGeometry(80, 10, 210, 90);
+    this->WinputAltura->setGeometry(390, 58, 210, 90);
 
     this->WinputAltura = new InputNumerosWidget("Longitud de armadura", 1, 99, this);
-    this->WinputAltura->setGeometry(370, 10, 210, 90);
+    this->WinputAltura->setGeometry(390, 205, 210, 90);
 
-    this->WtablaInputFuerzas = new TablaFuerzasWidget(this);
-    this->WtablaInputFuerzas->setGeometry(80, 110, 500, 380);
+    this->Wresultados = new QWidget(this);
+    QVBoxLayout* layout = new QVBoxLayout(Wresultados);
+
+    // Create and add the QLabel widgets
+    QLabel* label1 = new QLabel("Torca resultante en la armadura: ", Wresultados);
+    QLabel* label2 = new QLabel("Fuerza de reacción en el apoyo fijo: ", Wresultados);
+    QLabel* label3 = new QLabel("Fuerza de reacción en el apoyo móvil: ", Wresultados);
+
+    layout->addWidget(label1);
+    layout->addWidget(label2);
+    layout->addWidget(label3);
+    this->Wresultados->setGeometry(390, 352, 210, 200);
 
     this->show();
 }
