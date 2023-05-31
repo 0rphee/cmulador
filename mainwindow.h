@@ -27,6 +27,7 @@ private:
    QPushButton * botonArmadura;
 
    VentanaArmadura * ventanaArmadura;
- 
+
+   void	updateButtonStyles();
 };
 #endif // MAINWINDOW_H
