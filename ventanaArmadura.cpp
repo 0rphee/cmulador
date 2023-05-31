@@ -44,11 +44,11 @@ VentanaArmadura::VentanaArmadura(QWidget *parent) : QWidget(parent)
 {
     this->setWindowTitle("Armadura");
 
-    this->setMinimumSize(660, 500);
-    this->setMaximumSize(660, 500);
+    this->setMinimumSize(660, 418);
+    this->setMaximumSize(660, 418);
 
     this->WtablaInputFuerzas = new TablaFuerzasWidget(this);
-    this->WtablaInputFuerzas->setGeometry(60, 10, 260, 480);
+    this->WtablaInputFuerzas->setGeometry(60, 10, 260, 390);
 
     this->WinputAltura = new InputNumerosWidget("Altura de armadura", 1, 99, this);
     this->WinputAltura->setGeometry(390, 38, 210, 90);

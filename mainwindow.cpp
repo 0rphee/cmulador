@@ -15,8 +15,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    this->setMinimumSize(660, 500);
-    this->setMaximumSize(660, 500);
+    this->setMinimumSize(660, 418);
+    this->setMaximumSize(660, 418);
     this->setWindowTitle("cmulador");
 
     this->ventanaArmadura = new VentanaArmadura();
