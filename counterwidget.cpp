@@ -1,63 +1,53 @@
-#pragma once
+#include "counterwidget.h"
 
-#include <QApplication>
-#include <QWidget>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QIntValidator>
+CounterWidget::CounterWidget(QWidget *parent) : QWidget(parent)
+{
+    QHBoxLayout* layout = new QHBoxLayout(this);
 
-class CounterWidget : public QWidget {
-public:
-    explicit CounterWidget(QWidget* parent = nullptr) : QWidget(parent) {
-        QHBoxLayout* layout = new QHBoxLayout(this);
+    QPushButton* decrementButton = new QPushButton("-", this);
+    QPushButton* incrementButton = new QPushButton("+", this);
+    lineEdit = new QLineEdit("0", this);
 
-        QPushButton* decrementButton = new QPushButton("-", this);
-        QPushButton* incrementButton = new QPushButton("+", this);
-        lineEdit = new QLineEdit("0", this);
+    layout->addWidget(decrementButton);
+    layout->addWidget(lineEdit);
+    layout->addWidget(incrementButton);
 
-        layout->addWidget(decrementButton);
-        layout->addWidget(lineEdit);
-        layout->addWidget(incrementButton);
+    connect(decrementButton, &QPushButton::clicked, this, &CounterWidget::decrement);
+    connect(incrementButton, &QPushButton::clicked, this, &CounterWidget::increment);
+    connect(lineEdit, &QLineEdit::editingFinished, this, &CounterWidget::updateValue);
+    this->setGeometry(0,0,175,50);
+}
 
-        connect(decrementButton, &QPushButton::clicked, this, &CounterWidget::decrement);
-        connect(incrementButton, &QPushButton::clicked, this, &CounterWidget::increment);
-        connect(lineEdit, &QLineEdit::editingFinished, this, &CounterWidget::updateValue);
-        this->setGeometry(0,0,175,50);
+void CounterWidget::setMinAndMaxValues(int minVal, int maxVal){
+    this->maxValue = maxVal;
+    this->minValue = minVal;
+    lineEdit->setValidator(new QIntValidator(minValue, maxValue, this));
+    value = minVal;
+    updateLineEdit();
+}
+
+
+void CounterWidget::decrement() {
+    if (value > minValue){
+       value--;
     }
+    updateLineEdit();
+    emit valueChanged();
+}
 
-    QLineEdit* lineEdit;
+void CounterWidget::increment() {
+    if (value < maxValue){ value++; }
+    updateLineEdit();
+    emit valueChanged();
+ }
 
-    void setMinAndMaxValues(int minVal, int maxVal){
-        this->maxValue = maxVal;
-        this->minValue = minVal;
-        lineEdit->setValidator(new QIntValidator(minValue, maxValue, this));
-        value = minVal;
-        updateLineEdit();
-    }
-private:
+void CounterWidget::updateLineEdit() {
+    lineEdit->setText(QString::number(value));
+}
 
-    int maxValue;
-    int minValue = 0;
-    int value = minValue;
+void CounterWidget::updateValue() {
+    value = lineEdit->text().toInt();
+    emit valueChanged();
+}
 
-    void decrement() {
-        if (value > minValue){
-            value--;
-        }
-        updateLineEdit();
-    }
 
-    void increment() {
-        if (value < maxValue){ value++; }
-        updateLineEdit();
-    }
-
-    void updateLineEdit() {
-        lineEdit->setText(QString::number(value));
-    }
-
-    void updateValue() {
-        value = lineEdit->text().toInt();
-    }
-};
