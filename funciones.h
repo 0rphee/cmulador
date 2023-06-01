@@ -39,12 +39,10 @@ typedef struct{
 
 
 Nudo* obtener_nudos(int num_nudos, float longitud, float altura);
-Fuerza* obtener_fuerzas_palanca(int num_fuerzas);
-Fuerza* obtener_fuerzas_armadura(int numFuerzasArmadura, Nudo* nudos);
+Fuerza* obtener_fuerzas_palanca(TablaFuerzasWidget* WtablaInputFuerzas);
 Fuerza* obtener_fuerzas_armadura(TablaFuerzasWidget* WtablaInputFuerzas, Nudo* nudos);
-Palanca obtener_palanca();
+Palanca obtener_palanca(TablaFuerzasWidget * WtablaInputFuerzas, double longitud, double ubiFulcro);
 Armadura obtener_armadura(float longitud, float altura, int num_nudos, TablaFuerzasWidget* tabla);
-Armadura obtener_armadura(float longitud, float altura, int num_nudos);
 Fuerza calculo_fuerzas_palanca(Palanca palanca);
 float torca_resultante_armadura(Armadura armadura);
 Fuerza reaccion_ultimonudo(Armadura armadura);

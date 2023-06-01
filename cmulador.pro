@@ -10,21 +10,24 @@ CONFIG += c++11
 
 SOURCES += \
     counterwidget.cpp \
+    funciones.cpp \
     inputnumeroswidget.cpp \
     main.cpp \
     mainwindow.cpp \
     resultadoswidget.cpp \
     tablafuerzaswidget.cpp \
-    ventanaArmadura.cpp
+    ventanaArmadura.cpp \
+    ventanapalanca.cpp
 
 HEADERS += \
     counterwidget.h \
+    funciones.h \
     inputnumeroswidget.h \
     mainwindow.h \
-    palancaYarmadura.h \
     resultadoswidget.h \
     tablafuerzaswidget.h \
-    ventanaArmadura.h
+    ventanaArmadura.h \
+    ventanapalanca.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

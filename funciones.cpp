@@ -44,40 +44,20 @@ Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
     return nudos;
 }
 
-Fuerza* obtener_fuerzas_palanca(int num_fuerzas){
-    Fuerza * fuerzas = new Fuerza[num_fuerzas];
-    for(int i = 0; i < num_fuerzas; i++){
-        cout << "Ingrese la magnitud de la fuerzas " << i+1 << ": ";
-        cin >> fuerzas[i].magnitud;
-        cout << "Ingrese la dirección de la fuerzas " << i+1 << ": ";
-        cin >> fuerzas[i].direccion;
+Fuerza* obtener_fuerzas_palanca(TablaFuerzasWidget* WtablaInputFuerzas){
+    Fuerza * fuerzas = new Fuerza[WtablaInputFuerzas->rowCount()];
+    for(int i = 0; i < WtablaInputFuerzas->rowCount(); i++){
+        fuerzas[i].magnitud = WtablaInputFuerzas->item(i, 0)->text().toDouble();
+        fuerzas[i].direccion = WtablaInputFuerzas->item(i, 1)->text().toDouble() * PI/180.0;
         fuerzas[i].direccion = fuerzas[i].direccion * PI/180.0;
-        cout << "Ingrese la ubicación en X de la fuerzas " << i+1 << ": ";
-        cin >> fuerzas[i].ubiX;
+        fuerzas[i].ubiX = WtablaInputFuerzas->item(i, 2)->text().toDouble();
         fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
         fuerzas[i].fuerzaY = fuerzas[i].magnitud * sin(fuerzas[i].direccion);
     }
     return fuerzas;
 }
 
-Fuerza* obtener_fuerzas_armadura(int numFuerzasArmadura, Nudo* nudos){
-    Fuerza * fuerzas = new Fuerza[numFuerzasArmadura];
-    for(int i = 0; i < numFuerzasArmadura; i++){
-        int numero_nudo = 0;
-        cout << "Ingrese la magnitud de la fuerza " << i+1 << ": ";
-        cin >> fuerzas[i].magnitud;
-        cout << "Ingrese la dirección de la fuerza " << i+1 << ": ";
-        cin >> fuerzas[i].direccion;
-        fuerzas[i].direccion = fuerzas[i].direccion * PI/180.0;
-        fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
-        fuerzas[i].fuerzaY = fuerzas[i].magnitud * sin(fuerzas[i].direccion);
-        cout << "Ingrese la ubicación del nudo al que se le aplica la fuerza " << i+1 << ": ";
-        cin >> numero_nudo;
-        fuerzas[i].ubiX = nudos[numero_nudo-1].ubiX;
-        fuerzas[i].ubiY = nudos[numero_nudo-1].ubiY;
-    }
-    return fuerzas;
-}
+
 
 Fuerza* obtener_fuerzas_armadura(TablaFuerzasWidget* WtablaInputFuerzas, Nudo* nudos){
     Fuerza * fuerzas = new Fuerza[WtablaInputFuerzas->rowCount()];
@@ -103,18 +83,14 @@ Fuerza* obtener_fuerzas_armadura(TablaFuerzasWidget* WtablaInputFuerzas, Nudo* n
     return fuerzas;
 }
 
-Palanca obtener_palanca(){
+Palanca obtener_palanca(TablaFuerzasWidget * WtablaInputFuerzas, double longitud, double ubiFulcro){
     Palanca palanca;
-    cout << "Ingrese la longitud de la palanca: ";
-    cin >> palanca.longitud_palanca;
-    cout << "Ingrese la ubicación del fulcro: ";
-    cin >> palanca.fulcro;
-    cout << "Ingrese el numero de fuerzas: ";
-    cin >> palanca.num_fuerzas_palanca;
-    palanca.fuerzas = obtener_fuerzas_palanca(palanca.num_fuerzas_palanca);
+    palanca.longitud_palanca = longitud;
+    palanca.fulcro = ubiFulcro;
+    palanca.num_fuerzas_palanca = WtablaInputFuerzas->rowCount();
+    palanca.fuerzas = obtener_fuerzas_palanca(WtablaInputFuerzas);
     return palanca;
 }
-
 Armadura obtener_armadura(float longitud, float altura, int num_nudos, TablaFuerzasWidget* tabla){
     Armadura armadura;
     armadura.longitud = longitud;
@@ -126,6 +102,7 @@ Armadura obtener_armadura(float longitud, float altura, int num_nudos, TablaFuer
     return armadura;
 }
 
+// unico resultado final de palanca
 Fuerza calculo_fuerzas_palanca(Palanca palanca){
     Fuerza torca_resultante;
     for(int i = 0; i < palanca.num_fuerzas_palanca; i++){
