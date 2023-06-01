@@ -48,11 +48,18 @@ Fuerza* obtener_fuerzas_palanca(TablaFuerzasWidget* WtablaInputFuerzas){
     Fuerza * fuerzas = new Fuerza[WtablaInputFuerzas->rowCount()];
     for(int i = 0; i < WtablaInputFuerzas->rowCount(); i++){
         fuerzas[i].magnitud = WtablaInputFuerzas->item(i, 0)->text().toDouble();
+        cout << "magnitud de fuerza [" << i << "]:" << fuerzas[i].magnitud << "\n";
+
         fuerzas[i].direccion = WtablaInputFuerzas->item(i, 1)->text().toDouble() * PI/180.0;
-        fuerzas[i].direccion = fuerzas[i].direccion * PI/180.0;
+        cout << "direccion de fuerza [" << i << "]:" << fuerzas[i].direccion << "\n";
+
         fuerzas[i].ubiX = WtablaInputFuerzas->item(i, 2)->text().toDouble();
+
         fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
+        cout << "fuerza x de fuerza [" << i << "]:" << fuerzas[i].fuerzaX << "\n";
+
         fuerzas[i].fuerzaY = fuerzas[i].magnitud * sin(fuerzas[i].direccion);
+        cout << "fuerza y de fuerza [" << i << "]:" << fuerzas[i].fuerzaY << "\n";
     }
     return fuerzas;
 }
