@@ -1,7 +1,7 @@
 #ifndef INPUTNUMEROSWIDGET_H
 #define INPUTNUMEROSWIDGET_H
 
-#include "counterwidget.cpp"
+#include "counterwidget.h"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>

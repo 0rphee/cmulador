@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ARMADURA_H
+#define ARMADURA_H
+
 #include <QWidget>
 #include <QLabel>
 #include <QLineEdit>
@@ -15,12 +17,11 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QPropertyAnimation>
-#include "counterwidget.cpp"
+#include "counterwidget.h"
 #include "inputnumeroswidget.h"
 #include "tablafuerzaswidget.h"
+#include "resultadoswidget.h"
 
-#ifndef ARMADURA_H
-#define ARMADURA_H
 
 class VentanaArmadura : public QWidget
 {
@@ -29,9 +30,11 @@ public:
     VentanaArmadura(QWidget *parent = nullptr);
     InputNumerosWidget * WinputAltura;
     InputNumerosWidget * WinputLongitud;
-    QWidget * Wresultados;
+    InputNumerosWidget * WinputNudos;
+    ResultadosWidget * Wresultados;
     TablaFuerzasWidget * WtablaInputFuerzas;
 private:
+    void updateLabels();
 
 signals:
 

@@ -13,6 +13,7 @@
 #include <QSpacerItem>
 #include <QHBoxLayout>
 #include <QMainWindow>
+#include <QApplication>
 #include "ventanaArmadura.h"
 
 class MainWindow : public QMainWindow

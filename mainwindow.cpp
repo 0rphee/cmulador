@@ -1,16 +1,4 @@
 #include "mainwindow.h"
-#include <QMainWindow>
-#include <QWidget>
-#include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QStatusBar>
-#include <QTableWidget>
-#include <QStandardItemModel>
-#include <QStringList>
-#include <QStandardItem>
-#include <QHBoxLayout>
-#include <QSpacerItem>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

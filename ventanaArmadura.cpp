@@ -1,6 +1,6 @@
 #include "ventanaArmadura.h"
 #include "tablafuerzaswidget.h"
-#include "iostream"
+#include "palancaYarmadura.h"
 
 class Lever : public QGraphicsItem {
 public:
@@ -51,48 +51,60 @@ VentanaArmadura::VentanaArmadura(QWidget *parent) : QWidget(parent)
     this->WtablaInputFuerzas->setGeometry(60, 10, 260, 390);
 
     this->WinputAltura = new InputNumerosWidget("Altura de armadura", 1, 99, this);
-    this->WinputAltura->setGeometry(390, 38, 210, 90);
+    this->WinputAltura->setGeometry(390, 0, 210, 90);
 
-    this->WinputAltura = new InputNumerosWidget("Longitud de armadura", 1, 99, this);
-    this->WinputAltura->setGeometry(390, 166, 210, 90);
+    this->WinputLongitud = new InputNumerosWidget("Longitud de armadura", 1, 99, this);
+    this->WinputLongitud->setGeometry(390, 80, 210, 90);
 
-    this->Wresultados = new QWidget(this);
-    this->Wresultados->setBackgroundRole(QPalette::Button);
-    QGridLayout* layout = new QGridLayout(Wresultados);
+    this->WinputNudos = new InputNumerosWidget("# de Nudos de armadura", 3, 99, this);
+    this->WinputNudos->setGeometry(390, 160, 210, 90);
 
-    // Create and add the QLabel widgets
-    QLabel* label1 = new QLabel("Torca resultante\nen la armadura: ", Wresultados);
-    QLabel* label2 = new QLabel("Fuerza de reacción\nen el apoyo fijo: ", Wresultados);
-    QLabel* label3 = new QLabel("Fuerza de reacción\nen el apoyo móvil: ", Wresultados);
+    this->Wresultados = new ResultadosWidget(this);
+    this->Wresultados->setGeometry(350, 220, 290, 200);
 
-    QLineEdit* lineEdit1 = new QLineEdit(Wresultados);
-    QLineEdit* lineEdit2 = new QLineEdit(Wresultados);
-    QLineEdit* lineEdit3 = new QLineEdit(Wresultados);
+    connect(this->WtablaInputFuerzas, &TablaFuerzasWidget::tableDataChanged, this, &VentanaArmadura::updateLabels);
+    connect(this->WinputAltura->counterWidget, &CounterWidget::valueChanged, this, &VentanaArmadura::updateLabels);
+    connect(this->WinputLongitud->counterWidget, &CounterWidget::valueChanged, this, &VentanaArmadura::updateLabels);
 
-    lineEdit1->setDisabled(true);
-    lineEdit2->setDisabled(true);
-    lineEdit3->setDisabled(true);
+     this->show();
+}
 
-    layout->addWidget(label1, 0, 0);
-    layout->addWidget(lineEdit1, 0, 1);
+void VentanaArmadura::updateLabels()
+{
+    bool nudosImpar = (WinputNudos->counterWidget->value % 2) == 1;
+    bool nudosFactor4 = (WinputNudos->counterWidget->value % 4) == 0;
 
-    layout->addWidget(label2, 1, 0);
-    layout->addWidget(lineEdit2, 1, 1);
+    bool nudosInvalidos = !nudosImpar && !nudosFactor4;
 
-    layout->addWidget(label3, 2, 0);
-    layout->addWidget(lineEdit3, 2, 1);
+    if (WtablaInputFuerzas->rowCount() < 0 || nudosInvalidos ) {
+        cout << "WARNING\n" << endl;
+        QString nudos4 = "Válidos: " + QString::number(nudosFactor4);
+        if (!nudosFactor4){
+            nudos4 = "Inválidos: " + QString::number(nudosFactor4);
+        }
+        QString nudosImparS = "Válidos: " + QString::number(nudosImpar);
+        if (!nudosImpar){
+            nudosImparS = "Inválidos: " + QString::number(nudosImpar);
+        }
+        QLabel * warning = new QLabel("WARNING, factor 4: " + nudos4 + "\n, impar: " + nudosImparS);
+        warning->show();
+        warning->setWindowTitle("WARNING");
 
-    this->Wresultados->setGeometry(390, 264, 210, 200);
+        warning->setMinimumSize(200, 200);
+        warning->setMaximumSize(200, 200);
 
-    // Set the texts using a function
-    // Assuming you have a function that updates the text based on some calculations
-    // Replace the function call with your actual logic
-    //auto updateTexts = [&label1, &label2, &label3]() {
-    //    // Update the text of each QLabel widget
-    //    label1->setText("Torca resultante en la armadura: " + QString::number(calculateTorque()) + " Nm");
-    //    label2->setText("Fuerza de reacción en el apoyo fijo: " + QString::number(calculateForce()) + " N " + QString::number(calculateAngle()) + " °");
-    //    label3->setText("Fuerza de reacción en el apoyo móvil: " + QString::number(calculateForce()) + " N " + QString::number(calculateAngle()) + " °");
-    //};
+    }else{
+        Armadura armadura = obtener_armadura(WinputLongitud->counterWidget->value, WinputAltura->counterWidget->value, WinputNudos->counterWidget->value, WtablaInputFuerzas);
 
-    this->show();
+        double torcaResultante = torca_resultante_armadura(armadura);
+        Fuerza fuerzaApoyoFijo = reaccion_nudo0(armadura);
+        Fuerza fuerzaApoyoMovil = reaccion_ultimonudo(armadura);
+
+        // Update the text of the labels
+        calculo_fuerzas_armadura(armadura);
+
+        this->Wresultados->lineEdit1->setText(QString::number(torcaResultante) + " Nm");
+        this->Wresultados->lineEdit2->setText(QString::number(fuerzaApoyoFijo.magnitud) + " N " + QString::number(fuerzaApoyoFijo.direccion) + " °");
+        this->Wresultados->lineEdit3->setText(QString::number(fuerzaApoyoMovil.magnitud) + " N " + QString::number(fuerzaApoyoMovil.direccion) + " °");
+    }
 }
