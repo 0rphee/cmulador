@@ -13,10 +13,9 @@ QWidget* MyDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& o
         QValidator* validator = new QDoubleValidator(0.0, 360.0, 2, editor);
         editor->setValidator(validator);
     } else if (column == 2){
-        QValidator* validator = new QIntValidator(0, 999, editor);
+        QValidator* validator = new QIntValidator(1, 999, editor);
         editor->setValidator(validator);
     }
-
     return editor;
 }
 
@@ -50,8 +49,10 @@ void TablaFuerzasWidget::addRow() {
 
         setItem(row, 0, new QTableWidgetItem(QString::number(0)));
         setItem(row, 1, new QTableWidgetItem(QString::number(0)));
-        setItem(row, 2, new QTableWidgetItem(QString::number(0)));
+        setItem(row, 2, new QTableWidgetItem(QString::number(1)));
         this->resizeColumnsToContents();
+
+        emit tableDataChanged();
     }
 
 
@@ -75,4 +76,6 @@ void TablaFuerzasWidget::deleteSelectedRows() {
         foreach (int row, sortedRows) {
             removeRow(row);
         }
+
+        emit tableDataChanged();
 }

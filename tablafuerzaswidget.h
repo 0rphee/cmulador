@@ -24,10 +24,13 @@ private:
     void addRow();
     void deleteSelectedRows();
 
+signals:
+    void tableDataChanged();
 };
 
 class MyDelegate : public QItemDelegate {
     Q_OBJECT
+
 public:
     explicit MyDelegate(QObject* parent = nullptr);
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
