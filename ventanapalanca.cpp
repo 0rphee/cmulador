@@ -26,7 +26,7 @@ VentanaPalanca::VentanaPalanca(QWidget *parent) : QWidget(parent)
     this->WbotonResultados->setGeometry(520, 80, 120, 90);
 
     this->Wresultados = new PResultadosWidget(this);
-    this->Wresultados->setGeometry(340, 200, 310, 200);
+    this->Wresultados->setGeometry(340, 200, 310, 100);
 
     connect(this->WtablaInputFuerzas, &TablaFuerzasWidget::tableDataChanged, this, &VentanaPalanca::updateLabels);
     connect(this->WinputLongitud->counterWidget, &CounterWidget::valueChanged, this, &VentanaPalanca::updateLabels);
@@ -75,13 +75,6 @@ void VentanaPalanca::updateLabels()
 
         Fuerza torcaResultante = calculo_fuerzas_palanca(palanca);
 
-        this->Wresultados->lineEdit1->setText(QString::number(torcaResultante.fuerzaX) + " Nm");
-        this->Wresultados->lineEdit2->setText(QString::number(torcaResultante.fuerzaY) + " Nm");
-//        double apoyofijoDirGrados = fuerzaApoyoFijo.direccion * 180 / PI;
-//        double apoyomovilDirGrados = fuerzaApoyoMovil.direccion * 180 / PI;
-
-//        this->Wresultados->lineEdit1->setText(QString::number(torcaResultante) + " Nm");
-//        this->Wresultados->lineEdit2->setText(QString::number(fuerzaApoyoFijo.magnitud) + " N " + QString::number(apoyofijoDirGrados) + " °");
-//        this->Wresultados->lineEdit3->setText(QString::number(fuerzaApoyoMovil.magnitud) + " N " + QString::number(apoyomovilDirGrados) + " °");
+        this->Wresultados->lineEdit->setText(QString::number(torcaResultante.magnitud) + " Nm");
     }
 }
