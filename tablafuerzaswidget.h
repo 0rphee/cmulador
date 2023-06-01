@@ -16,6 +16,7 @@ class TablaFuerzasWidget : public QTableWidget
     Q_OBJECT
 public:
     explicit TablaFuerzasWidget(QWidget *parent = nullptr);
+    bool esArmadura;
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -36,6 +37,13 @@ public:
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
+class MyDelegateP : public QItemDelegate {
+    Q_OBJECT
+
+public:
+    explicit MyDelegateP(QObject* parent = nullptr);
+    QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+};
 
 
 

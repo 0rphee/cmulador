@@ -14,6 +14,8 @@
 #include <QHBoxLayout>
 #include <QMainWindow>
 #include <QApplication>
+
+#include "ventanapalanca.h"
 #include "ventanaArmadura.h"
 
 class MainWindow : public QMainWindow
@@ -28,6 +30,7 @@ private:
    QPushButton * botonArmadura;
 
    VentanaArmadura * ventanaArmadura;
+   VentanaPalanca * ventanaPalanca;
 
    void	updateButtonStyles();
 };

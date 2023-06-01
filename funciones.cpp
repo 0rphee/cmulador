@@ -1,56 +1,6 @@
-#ifndef PALANCAYARMADURA_H
-#define PALANCAYARMADURA_H
-
-#include <iostream>
-#include <cmath>
-#include "tablafuerzaswidget.h"
-
-#ifdef WIN32
-#include <windows.h>
-#endif
+#include "funciones.h"
 
 using namespace std;
-
-typedef struct{
-    float magnitud;
-    float direccion;
-    float ubiX;
-    float ubiY;
-    float fuerzaX;
-    float fuerzaY;
-}Fuerza;
-
-typedef struct{
-    float longitud_palanca;
-    float fulcro;
-    int num_fuerzas_palanca;
-    Fuerza *fuerzas;
-}Palanca ;
-
-typedef struct{
-    float ubiX;
-    float ubiY;
-}Nudo;
-
-typedef struct{
-    float longitud;
-    float altura;
-    int num_nudos;
-    int num_fuerzas_armadura;
-    Fuerza *fuerzas;
-    Nudo *nudos;
-}Armadura;
-
-Nudo* obtener_nudos(int num_nudos, float longitud, float altura);
-Fuerza* obtener_fuerzas_palanca(int num_fuerzas);
-Fuerza* obtener_fuerzas_armadura(int numFuerzasArmadura, Nudo* nudos);
-Palanca obtener_palanca();
-Armadura obtener_armadura();
-Fuerza calculo_fuerzas_palanca(Palanca palanca);
-float torca_resultante_armadura(Armadura armadura);
-Fuerza reaccion_ultimonudo(Armadura armadura);
-Fuerza reaccion_nudo0(Armadura armadura);
-void calculo_fuerzas_armadura(Armadura armadura);
 
 Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
     Nudo* nudos = new Nudo[num_nudos];
@@ -59,17 +9,17 @@ Nudo* obtener_nudos(int num_nudos, float longitud, float altura){
         for (int i = 0; i < num_nudos; i++){
             nudos[i].ubiX = (longitud/num_nudos)*i;
             if ( (i%2) != 0 ){
-                nudos[i].ubiY = altura;
+                nudos[i].ubiY = 0;
            }
             else{
-                nudos[i].ubiY = 0;
+                nudos[i].ubiY = altura;
             }
         }
     }
     // caso múltiplo de 4
     else if  (num_nudos % 4 == 0){
         int acumulador = 0;
-        for(int i = 0; i < num_nudos; i++){
+        for(int i = 0; i < num_nudos-1; i++){
             if ( i == 0 ){
                 nudos[i].ubiX = 0;
                 nudos[i].ubiY = 0;
@@ -101,6 +51,7 @@ Fuerza* obtener_fuerzas_palanca(int num_fuerzas){
         cin >> fuerzas[i].magnitud;
         cout << "Ingrese la dirección de la fuerzas " << i+1 << ": ";
         cin >> fuerzas[i].direccion;
+        fuerzas[i].direccion = fuerzas[i].direccion * PI/180.0;
         cout << "Ingrese la ubicación en X de la fuerzas " << i+1 << ": ";
         cin >> fuerzas[i].ubiX;
         fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
@@ -117,6 +68,7 @@ Fuerza* obtener_fuerzas_armadura(int numFuerzasArmadura, Nudo* nudos){
         cin >> fuerzas[i].magnitud;
         cout << "Ingrese la dirección de la fuerza " << i+1 << ": ";
         cin >> fuerzas[i].direccion;
+        fuerzas[i].direccion = fuerzas[i].direccion * PI/180.0;
         fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
         fuerzas[i].fuerzaY = fuerzas[i].magnitud * sin(fuerzas[i].direccion);
         cout << "Ingrese la ubicación del nudo al que se le aplica la fuerza " << i+1 << ": ";
@@ -130,16 +82,19 @@ Fuerza* obtener_fuerzas_armadura(int numFuerzasArmadura, Nudo* nudos){
 Fuerza* obtener_fuerzas_armadura(TablaFuerzasWidget* WtablaInputFuerzas, Nudo* nudos){
     Fuerza * fuerzas = new Fuerza[WtablaInputFuerzas->rowCount()];
     for (int i = 0; i < WtablaInputFuerzas->rowCount(); i++) {
-        cout << WtablaInputFuerzas->item(i,0)->text().toStdString() + " " + WtablaInputFuerzas->item(i,1)->text().toStdString() + " " + WtablaInputFuerzas->item(i,2)->text().toStdString() << endl;
-        if (WtablaInputFuerzas->item(i,0)->text().toInt() == 0){
 
-        }
+        cout << WtablaInputFuerzas->item(i,0)->text().toStdString() + " " + WtablaInputFuerzas->item(i,1)->text().toStdString() + " " + WtablaInputFuerzas->item(i,2)->text().toStdString() << endl;
+
         fuerzas[i].magnitud = WtablaInputFuerzas->item(i,0)->text().toInt();
 
-        fuerzas[i].direccion = WtablaInputFuerzas->item(i,2)->text().toInt();
+        fuerzas[i].direccion = WtablaInputFuerzas->item(i,1)->text().toInt() * PI/180.0;
+        cout << "direccion de fuerza [" << i << "]:" << fuerzas[i].direccion << "\n";
 
         fuerzas[i].fuerzaX = fuerzas[i].magnitud * cos(fuerzas[i].direccion);
+        cout << "fuerza x de fuerza [" << i << "]:" << fuerzas[i].fuerzaX << "\n";
+
         fuerzas[i].fuerzaY = fuerzas[i].magnitud * sin(fuerzas[i].direccion);
+        cout << "fuerza y de fuerza [" << i << "]:" << fuerzas[i].fuerzaY << "\n";
 
         int numNudo = WtablaInputFuerzas->item(i,2)->text().toInt();
         fuerzas[i].ubiX = nudos[numNudo-1].ubiX;
@@ -171,50 +126,6 @@ Armadura obtener_armadura(float longitud, float altura, int num_nudos, TablaFuer
     return armadura;
 }
 
-Armadura obtener_armadura(float longitud, float altura, int num_nudos){
-    Armadura armadura;
-//    do{
-//        cout << "Ingrese la longitud de la armadura (L > 0): ";
-//        cin >> armadura.longitud;
-    armadura.longitud = longitud;
-//    }while (armadura.longitud <= 0);
-//    do{
-//        cout << "Ingrese la altura de la armadura (h > 0): ";
-//        cin >> armadura.altura;
-    armadura.altura = altura;
-//    }while (armadura.altura <= 0);
-//    bool validación = false;
-//    do{
-//        cout << "Ingrese el número de nudos (N > 3 / N impar / N multiplo de 4): ";
-//        cin >> armadura.num_nudos;
-    armadura.num_nudos = num_nudos;
-//        if (armadura.num_nudos < 3){
-//            cout << "El número de nudos debe ser mayor o igual a 3" << endl;
-//            validación = false;
-//        }
-//        if ( (armadura.num_nudos%2) != 0 ){
-//            validación = true;
-//        }
-//        else{
-//            if( (armadura.num_nudos%4) == 0){
-//                validación = true;
-//            }
-//            else{
-//                cout << "El número de nudos debe ser impar o múltiplo de 4" << endl;
-//                validación = false;
-//            }
-//        }
-//    } while(validación == false);
-    armadura.nudos = obtener_nudos(armadura.num_nudos, armadura.longitud, armadura.altura);
-//    do {
-//        cout << "Ingrese el número de fuerzas ( N > 1 ): ";
-//        cin >> armadura.num_fuerzas_armadura;
-//    } while (armadura.num_fuerzas_armadura < 1);
-    armadura.fuerzas = obtener_fuerzas_armadura(armadura.num_fuerzas_armadura, armadura.nudos);
-
-    return armadura;
-}
-
 Fuerza calculo_fuerzas_palanca(Palanca palanca){
     Fuerza torca_resultante;
     for(int i = 0; i < palanca.num_fuerzas_palanca; i++){
@@ -239,7 +150,7 @@ float torca_resultante_armadura(Armadura armadura){
 Fuerza reaccion_ultimonudo(Armadura armadura){
     Fuerza reaccion_ultimonudo;
     reaccion_ultimonudo.magnitud = -(torca_resultante_armadura(armadura)/armadura.longitud);
-    reaccion_ultimonudo.direccion = 90;
+    reaccion_ultimonudo.direccion = 90 * PI/180.0;
     return reaccion_ultimonudo;
 }
 
@@ -265,5 +176,3 @@ void calculo_fuerzas_armadura(Armadura armadura){
     cout << "-----------------------------------------------------\n";
 }
 
-
-#endif // PALANCAYARMADURA_H

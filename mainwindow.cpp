@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->ventanaArmadura = new VentanaArmadura();
     this->ventanaArmadura->hide();
 
+    this->ventanaPalanca = new VentanaPalanca();
+    this->ventanaPalanca->hide();
+
     QGridLayout* mainLayout = new QGridLayout();
 
     QLabel* imageLabel1 = new QLabel(this);
@@ -30,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->botonPalanca = new QPushButton("Realizar cálculos\nde palanca", this);
     this->botonPalanca->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    this->connect(this->botonPalanca, &QPushButton::released, this->ventanaPalanca, &VentanaPalanca::show);
     mainLayout->addWidget(this->botonPalanca, 1, 0);
 
     this->botonArmadura = new QPushButton("Realizar cálculos\nde armadura", this);

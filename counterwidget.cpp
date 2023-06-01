@@ -26,6 +26,14 @@ void CounterWidget::setMinAndMaxValues(int minVal, int maxVal){
     updateLineEdit();
 }
 
+void CounterWidget::setMinAndMaxValues(double minVal, double maxVal){
+    this->maxValue = maxVal;
+    this->minValue = minVal;
+    lineEdit->setValidator(new QDoubleValidator(minValue, maxValue, 2, this));
+    value = minVal;
+    updateLineEdit();
+}
+
 
 void CounterWidget::decrement() {
     if (value > minValue){

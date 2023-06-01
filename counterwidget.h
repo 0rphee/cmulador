@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QIntValidator>
+#include <QDoubleValidator>
 #include <QHBoxLayout>
 #include <QPushButton>
 
@@ -14,6 +15,7 @@ public:
     explicit CounterWidget(QWidget *parent = nullptr);
 
     void setMinAndMaxValues(int minVal, int maxVal);
+    void setMinAndMaxValues(double minVal, double maxVal);
 
     QLineEdit * lineEdit;
 

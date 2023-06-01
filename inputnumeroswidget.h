@@ -15,6 +15,7 @@ class InputNumerosWidget : public QWidget
 public:
     explicit InputNumerosWidget(QWidget *parent = nullptr);
     explicit InputNumerosWidget(QString prompt, int maxValue, int minValue, QWidget *parent = nullptr);
+    explicit InputNumerosWidget(QString prompt, double maxValue, double minValue, QWidget *parent = nullptr);
     CounterWidget * counterWidget;
     QLabel * label;
 

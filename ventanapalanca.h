@@ -1,5 +1,6 @@
-#ifndef ARMADURA_H
-#define ARMADURA_H
+#pragma once
+#ifndef VENTANAPALANCA_H
+#define VENTANAPALANCA_H
 
 #include <QWidget>
 #include <QLabel>
@@ -13,6 +14,7 @@
 #include <QMainWindow>
 #include <QDialog>
 
+
 #include "funciones.h"
 #include "counterwidget.h"
 #include "inputnumeroswidget.h"
@@ -20,22 +22,21 @@
 #include "resultadoswidget.h"
 
 
-class VentanaArmadura : public QWidget
+class VentanaPalanca : public QWidget
 {
     Q_OBJECT
 public:
-    VentanaArmadura(QWidget *parent = nullptr);
-    InputNumerosWidget * WinputAltura;
+    explicit VentanaPalanca(QWidget *parent = nullptr);
+
     InputNumerosWidget * WinputLongitud;
-    InputNumerosWidget * WinputNudos;
+    InputNumerosWidget * WinputUbicacionFulcro;
     QPushButton * WbotonResultados;
     ResultadosWidget * Wresultados;
     TablaFuerzasWidget * WtablaInputFuerzas;
+
 private:
     void updateLabels();
 
-signals:
-
 };
 
-#endif // ARMADURA_H
+#endif // VENTANAPALANCA_H
