@@ -19,8 +19,14 @@ public:
 
     QLineEdit * lineEdit;
 
+    bool esInt;
 
     int value;
+    double dvalue;
+
+    double dminValue = 0;
+    double dmaxValue = 100;
+
     int minValue = 0;
     int maxValue = 100;
 

@@ -19,6 +19,7 @@ CounterWidget::CounterWidget(QWidget *parent) : QWidget(parent)
 }
 
 void CounterWidget::setMinAndMaxValues(int minVal, int maxVal){
+    this->esInt = true;
     this->maxValue = maxVal;
     this->minValue = minVal;
     lineEdit->setValidator(new QIntValidator(minValue, maxValue, this));
@@ -27,34 +28,50 @@ void CounterWidget::setMinAndMaxValues(int minVal, int maxVal){
 }
 
 void CounterWidget::setMinAndMaxValues(double minVal, double maxVal){
-    this->maxValue = maxVal;
-    this->minValue = minVal;
+    this->esInt = false;
+    this->dmaxValue = maxVal;
+    this->dminValue = minVal;
     lineEdit->setValidator(new QDoubleValidator(minValue, maxValue, 2, this));
-    value = minVal;
+    dvalue = minVal;
     updateLineEdit();
 }
 
 
 void CounterWidget::decrement() {
-    if (value > minValue){
+
+    if ((value > minValue) && esInt){
        value--;
+    }else if (dvalue > dminValue){
+        dvalue--;
     }
     updateLineEdit();
     emit valueChanged();
 }
 
 void CounterWidget::increment() {
-    if (value < maxValue){ value++; }
+    if ((value < maxValue) && esInt){
+        value++;
+    } else if (dvalue < dmaxValue){
+        dvalue++;
+    }
     updateLineEdit();
     emit valueChanged();
  }
 
 void CounterWidget::updateLineEdit() {
-    lineEdit->setText(QString::number(value));
+    if (esInt){
+        lineEdit->setText(QString::number(value));
+    } else{
+        lineEdit->setText(QString::number(dvalue));
+    }
 }
 
 void CounterWidget::updateValue() {
-    value = lineEdit->text().toInt();
+    if (esInt){
+        value = lineEdit->text().toInt();
+    } else{
+        dvalue = lineEdit->text().toDouble();
+    }
     emit valueChanged();
 }
 
