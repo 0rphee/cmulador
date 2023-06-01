@@ -14,12 +14,14 @@
 #include <QMainWindow>
 #include <QDialog>
 
+#include <iostream>
 
 #include "funciones.h"
 #include "counterwidget.h"
 #include "inputnumeroswidget.h"
 #include "tablafuerzaswidget.h"
 #include "resultadoswidget.h"
+#include "presultadoswidget.h"
 
 
 class VentanaPalanca : public QWidget
@@ -31,7 +33,7 @@ public:
     InputNumerosWidget * WinputLongitud;
     InputNumerosWidget * WinputUbicacionFulcro;
     QPushButton * WbotonResultados;
-    ResultadosWidget * Wresultados;
+    PResultadosWidget* Wresultados;
     TablaFuerzasWidget * WtablaInputFuerzas;
 
 private:

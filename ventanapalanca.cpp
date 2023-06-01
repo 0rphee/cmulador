@@ -1,5 +1,7 @@
 #include "ventanapalanca.h"
 
+using namespace std;
+
 VentanaPalanca::VentanaPalanca(QWidget *parent) : QWidget(parent)
 {
     this->setWindowTitle("Palanca");
@@ -23,7 +25,7 @@ VentanaPalanca::VentanaPalanca(QWidget *parent) : QWidget(parent)
     this->WbotonResultados = new QPushButton("Calcular\nresultados",this);
     this->WbotonResultados->setGeometry(520, 80, 120, 90);
 
-    this->Wresultados = new ResultadosWidget(this);
+    this->Wresultados = new PResultadosWidget(this);
     this->Wresultados->setGeometry(340, 200, 310, 200);
 
     connect(this->WtablaInputFuerzas, &TablaFuerzasWidget::tableDataChanged, this, &VentanaPalanca::updateLabels);
@@ -36,10 +38,14 @@ VentanaPalanca::VentanaPalanca(QWidget *parent) : QWidget(parent)
 
 void VentanaPalanca::updateLabels()
 {
-    if (WtablaInputFuerzas->rowCount() <= 0) {
+    cout << WinputLongitud->counterWidget->dvalue << endl;
+
+    if (WtablaInputFuerzas->rowCount() <= 0 || WinputLongitud->counterWidget->dvalue == 0) {
         QString labelText = "";
         if (WtablaInputFuerzas->rowCount() <= 0){
             labelText = "No hay fuerzas para\ncalcular resultados";
+        } else{
+            labelText = "La longitud de la \npalanca no puede ser 0";
         }
 
        // Create the warning dialog
@@ -61,14 +67,16 @@ void VentanaPalanca::updateLabels()
         warningDialog->show();
 
     }else{
-//        Armadura armadura = obtener_armadura(WinputLongitud->counterWidget->value, WinputAltura->counterWidget->value, WinputNudos->counterWidget->value, WtablaInputFuerzas);
+        Palanca palanca = obtener_palanca(WtablaInputFuerzas, WinputLongitud->counterWidget->dvalue, WinputUbicacionFulcro->counterWidget->dvalue);
 
-//        double torcaResultante = torca_resultante_armadura(armadura);
-//        Fuerza fuerzaApoyoFijo = reaccion_nudo0(armadura);
-//        Fuerza fuerzaApoyoMovil = reaccion_ultimonudo(armadura);
+        cout << "Fuerzas palanca: " << palanca.num_fuerzas_palanca << endl;
+        cout << "Posicion fulcro: " << palanca.fulcro << endl;
+        cout << "Longitud palanca: " << palanca.longitud_palanca << endl;
 
-//        calculo_fuerzas_armadura(armadura); // writes to stdout
+        Fuerza torcaResultante = calculo_fuerzas_palanca(palanca);
 
+        this->Wresultados->lineEdit1->setText(QString::number(torcaResultante.fuerzaX) + " Nm");
+        this->Wresultados->lineEdit2->setText(QString::number(torcaResultante.fuerzaY) + " Nm");
 //        double apoyofijoDirGrados = fuerzaApoyoFijo.direccion * 180 / PI;
 //        double apoyomovilDirGrados = fuerzaApoyoMovil.direccion * 180 / PI;
 
