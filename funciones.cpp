@@ -114,10 +114,10 @@ Fuerza calculo_fuerzas_palanca(Palanca palanca){
     Fuerza torca_resultante;
     for(int i = 0; i < palanca.num_fuerzas_palanca; i++){
         if(palanca.fuerzas[i].ubiX < palanca.fulcro){
-            torca_resultante.fuerzaX += palanca.fuerzas[i].fuerzaX * (palanca.fulcro - palanca.fuerzas[i].ubiX);
+            torca_resultante.magnitud += palanca.fuerzas[i].fuerzaY * (palanca.fulcro - palanca.fuerzas[i].ubiX);
         }
         else{
-            torca_resultante.fuerzaX -= palanca.fuerzas[i].fuerzaX * (palanca.fuerzas[i].ubiX - palanca.fulcro);
+            torca_resultante.magnitud -= palanca.fuerzas[i].fuerzaY * (palanca.fuerzas[i].ubiX - palanca.fulcro);
         }
     }
     return torca_resultante;
