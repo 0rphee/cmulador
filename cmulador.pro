@@ -14,6 +14,7 @@ SOURCES += \
     inputnumeroswidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    presultadoswidget.cpp \
     resultadoswidget.cpp \
     tablafuerzaswidget.cpp \
     ventanaArmadura.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     funciones.h \
     inputnumeroswidget.h \
     mainwindow.h \
+    presultadoswidget.h \
     resultadoswidget.h \
     tablafuerzaswidget.h \
     ventanaArmadura.h \
