@@ -60,7 +60,7 @@ VentanaArmadura::VentanaArmadura(QWidget *parent) : QWidget(parent)
     this->WinputNudos->setGeometry(390, 160, 210, 90);
 
     this->Wresultados = new ResultadosWidget(this);
-    this->Wresultados->setGeometry(350, 220, 290, 200);
+    this->Wresultados->setGeometry(340, 220, 310, 200);
 
     connect(this->WtablaInputFuerzas, &TablaFuerzasWidget::tableDataChanged, this, &VentanaArmadura::updateLabels);
     connect(this->WinputAltura->counterWidget, &CounterWidget::valueChanged, this, &VentanaArmadura::updateLabels);
